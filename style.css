@@ -1,0 +1,98 @@
+:root {
+	--black: #030303;
+	--white: #FCFCFC;
+	--passive-white: #F5F5F5;
+	--grey: #4B5563;
+	--blue: #234B68;
+	--active-blue: #29517F;
+	--orange: #FF822E;
+}
+
+/*------------CORPS--------------*/
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Nunito sans;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	background-color: var(--passive-white);
+	color: var(--blue);
+	min-height: 100vh;
+}
+
+header, footer {
+	margin: 15px;
+	padding: 20px;
+	min-height: 30%;
+	text-align: center;
+}
+
+main {
+	align-self: center;
+	width: 65%; 
+	border: 2px solid var(--blue);
+	border-radius: 15px;
+	text-align: center;
+	background-color: var(--white);
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	flex: 1; /* Prendre tout l'espace disponible */
+	justify-content: center; /* Centre verticalement */
+	align-items: center; /* Centre horizontalement */
+}
+
+/*---------FORMULAIRE------------*/
+
+form {
+	height: 100%;
+	width: 50%;
+	margin: 20px;
+	display: flex;
+	flex-direction: column;
+}
+
+.form-line {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	margin: 15px;
+}
+
+.form-label {
+	text-align: left;
+	width: 40%;
+}
+
+.form-control {
+	text-align: right;
+	
+	display: flex;
+	width: 60%;
+	border: 1px solid var(--blue);
+
+}
+
+/*--------BUTTON----------------*/
+button {
+
+}
+/*--------TEXT------------------*/
+span {
+	background-color: var(--blue);
+	color: var(--white);
+	text-align: center;
+	width: 20%;
+}
+input {
+	width: 80%;
+	border: none;
+}
+
