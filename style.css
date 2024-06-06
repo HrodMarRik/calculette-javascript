@@ -63,7 +63,7 @@ form {
 	width: 100%;
 	display: flex;
 	flex-direction: row;
-	margin: 15px;
+	margin: 30px;
 }
 
 .form-label {
@@ -73,16 +73,22 @@ form {
 
 .form-control {
 	text-align: right;
-	
 	display: flex;
 	width: 60%;
 	border: 1px solid var(--blue);
+	border-radius: 0 5px 5px 0;
 
 }
 
 /*--------BUTTON----------------*/
 button {
-
+	align-self: center;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	background-color: var(--blue);
+	color: var(--white);
+	width: 20%;
 }
 /*--------TEXT------------------*/
 span {
@@ -96,3 +102,9 @@ input {
 	border: none;
 }
 
+.text-left {
+	text-align: left;
+}
+.text-center {
+	text-align: center;
+}
