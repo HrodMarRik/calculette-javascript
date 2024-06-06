@@ -16,14 +16,16 @@
 	<main class="container">
 		<!-- calculatrice -->
 		<form action="#">
-			<h1 class="text-center">Calculatrice prêt immobilier</h1>
-			<div>
+			<div class="item">
+				<h1 class="text-center">Calculatrice prêt immobilier</h1>
+			</div>
+			<div class="item">
 				<div class="form-line">
 					<div class="form-label">
 						<label><b>Montant emprunté</b></label>
 					</div>
 					<div class="form-control">
-						<input type="number" name="duree_remboursement">
+						<input placeholder="en euro" type="number" name="montant_emprunter">
 						<span class=""><b>€</b></span>
 					</div>
 				</div>
@@ -32,7 +34,7 @@
 						<label><b>Taux nominal</b></label>
 					</div>
 					<div class="form-control">
-						<input type="number" name="duree_remboursement">
+						<input placeholder="en pourcent" type="number" name="taux_nominal">
 						<span class=""><b>%</b></span>
 					</div>
 				</div>
@@ -41,14 +43,19 @@
 						<label><b>Durée de remboursement</b></label>
 					</div>
 					<div class="form-control">
-						<input type="number" name="duree_remboursement">
+						<input placeholder="en mois" type="number" name="duree_remboursement">
 						<span class=""><b>an(s)</b></span>
 					</div>
 				</div>
-			<p class="danger text-left">Veuillez remplir tous les champs !</p>
+				<p class="danger text-left">Veuillez remplir tous les champs !</p>
 			</div>
-			<button type="submit">Calculer</button>
+			<div class="item">
+				<button type="submit"><b>Calculer</b></button>
+			</div>
 		</form>
+		<div class="printer">
+			
+		</div>
 	</main>
 	<footer>
 		<!-- copyright -->
