@@ -15,7 +15,7 @@
 	</header>
 	<main class="container">
 		<!-- calculatrice -->
-		<form action="#">
+		<form>
 			<div class="item">
 				<h1 class="text-center">Calculatrice prêt immobilier</h1>
 			</div>
@@ -47,10 +47,10 @@
 						<span class=""><b>an(s)</b></span>
 					</div>
 				</div>
-				<p class="danger text-left">Veuillez remplir tous les champs !</p>
+				<p style="display: none;" id="error" class="danger text-left">Veuillez remplir tous les champs !</p>
 			</div>
 			<div class="item">
-				<button type="submit"><b>Calculer</b></button>
+				<button type="button" onclick="calculate(event)"><b>Calculer</b></button>
 			</div>
 		</form>
 		<div class="printer">
@@ -60,7 +60,7 @@
 	<footer>
 		<!-- copyright -->
 	</footer>
-
+<script type="text/javascript" src="main.js"></script>
 </body>
 </html>
 
