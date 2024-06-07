@@ -1,99 +1,149 @@
 function calculate(event) {
     event.preventDefault();
 
-// Element --> input
     var montantEmprunterElement = document.getElementsByName('montant_emprunter')[0];
     var tauxNominalElement = document.getElementsByName('taux_nominal')[0];
     var dureeRemboursementElement = document.getElementsByName('duree_remboursement')[0];
-// Valeur --> valeur du input
+
     var montant_emprunter = montantEmprunterElement.value;
     var taux_nominal = tauxNominalElement.value;
     var duree_remboursement = dureeRemboursementElement.value;
-// Parents --> division parent du input
+
     var montantEmprunterParent = montantEmprunterElement.closest('.form-control');
     var tauxNominalParent = tauxNominalElement.closest('.form-control');
     var dureeRemboursementParent = dureeRemboursementElement.closest('.form-control');
-// mes printer -->
-    var tab_printer = document.getElementById('tab_printer');
-    var table_printer = document.getElementById('table_printer');
-    var total_printer = document.getElementById('total_printer');
+
     var error_printer = document.getElementById('error_printer');
-// on reinitialise mes valeur et affichage
-    var error = "";
+    var table_printer = document.getElementById('table_printer');
+    table_printer.innerHTML = '';
+
+    clearErrors(montantEmprunterParent, tauxNominalParent, dureeRemboursementParent, error_printer);
+
+    if (!validateInputs(montant_emprunter, taux_nominal, duree_remboursement, montantEmprunterParent, tauxNominalParent, dureeRemboursementParent, error_printer)) {
+        return;
+    }
+
+    montant_emprunter = parseFloat(montant_emprunter);
+    taux_nominal = parseFloat(taux_nominal);
+    duree_remboursement = parseInt(duree_remboursement);
+
+    var taux_interet_mensuel = (taux_nominal / 12) / 100;
+    var duree_remboursement_mois = duree_remboursement * 12;
+    var echeance_mensuelle = montant_emprunter * ((taux_interet_mensuel * Math.pow((1 + taux_interet_mensuel), duree_remboursement_mois)) / (Math.pow((1 + taux_interet_mensuel), duree_remboursement_mois) - 1));
+
+    for (var mois = 1; mois <= duree_remboursement_mois; mois++) {
+        var interets_du_mois = montant_emprunter * taux_interet_mensuel;
+        var amortissement_du_mois = echeance_mensuelle - interets_du_mois;
+        var solde_restant = montant_emprunter - amortissement_du_mois;
+        ajout_ligne(mois, montant_emprunter, echeance_mensuelle, interets_du_mois, amortissement_du_mois, solde_restant);
+        montant_emprunter = solde_restant;
+    }
+}
+
+
+function clearErrors(montantEmprunterParent, tauxNominalParent, dureeRemboursementParent, error_printer) {
     montantEmprunterParent.classList.remove('error-border');
     tauxNominalParent.classList.remove('error-border');
     dureeRemboursementParent.classList.remove('error-border');
     error_printer.innerHTML = "";
-    table_printer.innerHTML = '';
-
-// Gestion erreur
-    if (montant_emprunter === "" || taux_nominal === "" || duree_remboursement === "") {
-        error += "Veuillez remplir les champs:";
-        var firstError = true;
-
-        if (montant_emprunter === "") {
-            montantEmprunterParent.classList.add('error-border');
-            error += (firstError ? " " : ", ") + "Montant emprunté";
-            firstError = false;
-        }
-
-        if (taux_nominal === "") {
-            tauxNominalParent.classList.add('error-border');
-            error += (firstError ? " " : ", ") + "Taux nominal";
-            firstError = false;
-        }
-
-        if (duree_remboursement === "") {
-            dureeRemboursementParent.classList.add('error-border');
-            error += (firstError ? " " : ", ") + "Durée de remboursement";
-        }
-
-        error_printer.innerHTML =error;
-        error_printer.style.display = 'block';
-        return;
-
-    } else {
-        var regex_entier_decimal = /^\d+(\.\d+)?$/; 
-        var regex_decimal = /^\d+(\.\d+)$/;
-        var regex_entier = /^\d+$/;
-
-        error_printer.style.display = 'none';
-
-        if (!regex_entier.test(montant_emprunter)) {
-            error += "Le montant emprunté doit être un nombre entier.<br>";
-            montantEmprunterParent.classList.add('error-border');
-        }
-
-        if (!regex_decimal.test(taux_nominal)) {
-            error += "Le taux nominal doit être un nombre décimal.<br>";
-            tauxNominalParent.classList.add('error-border');
-        }
-
-        if (!regex_entier.test(duree_remboursement)) {
-            error += "La durée de remboursement doit être un nombre entier.<br>";
-            dureeRemboursementParent.classList.add('error-border');
-        }
-
-        if (error !== "") {
-            error_printer.innerHTML = error ;
-            error_printer.style.display = 'block';
-            return;
-        }
-// calcule de : mois,solde_initial,echeance,interet,amortissement,solde_restant
-        var taux_interet_mensuel = (taux_nominal/12)/100;
-        var duree_remboursement_mois = duree_remboursement * 12;
-        var interets_du_mois = montant_emprunter * taux_interet_mensuel;
-        var echeance_mensuelle = montant_emprunter * ((taux_interet_mensuel * Math.pow((1 + taux_interet_mensuel), duree_remboursement_mois)) / (Math.pow((1 + taux_interet_mensuel), duree_remboursement_mois) - 1));
-        for (var mois = 1; mois <= duree_remboursement_mois; mois++) {
-            var amortissement_du_mois = echeance_mensuelle - interets_du_mois;
-            var solde_restant = montant_emprunter - amortissement_du_mois;
-            ajout_ligne(mois, montant_emprunter, echeance_mensuelle, interets_du_mois, amortissement_du_mois, solde_restant);
-            montant_emprunter = solde_restant;
-            interets_du_mois = montant_emprunter * taux_interet_mensuel;
-        }
-    
-    }
+    error_printer.style.display = 'none';
 }
+
+function validateMontant(montant, montantEmprunterParent) {
+    if (montant === "") {
+        montantEmprunterParent.classList.add('error-border');
+        return "Le montant emprunté ne doit pas être vide.";
+    }
+
+    var regex_entier = /^\d+$/;
+    if (!regex_entier.test(montant)) {
+        montantEmprunterParent.classList.add('error-border');
+        return "Le montant emprunté doit être un nombre entier.";
+    }
+
+    if (parseFloat(montant) <= 0) {
+        montantEmprunterParent.classList.add('error-border');
+        return "Le montant emprunté doit être supérieur à zéro.";
+    }
+
+    return "";
+}
+
+
+function validateTaux(taux, tauxNominalParent) {
+    if (taux === "") {
+        tauxNominalParent.classList.add('error-border');
+        return "Le taux nominal ne doit pas être vide.";
+    }
+
+    var regex_decimal = /^\d+(\.\d+)$/;
+    if (!regex_decimal.test(taux)) {
+        tauxNominalParent.classList.add('error-border');
+        return "Le taux nominal doit être un nombre décimal.";
+    }
+
+    if (parseFloat(taux) <= 0) {
+        tauxNominalParent.classList.add('error-border');
+        return "Le taux nominal doit être supérieur à zéro.";
+    }
+
+    return "";
+}
+
+
+function validateDuree(duree, dureeRemboursementParent) {
+    if (duree === "") {
+        dureeRemboursementParent.classList.add('error-border');
+        return "La durée de remboursement ne doit pas être vide.";
+    }
+
+    var regex_entier = /^\d+$/;
+    if (!regex_entier.test(duree)) {
+        dureeRemboursementParent.classList.add('error-border');
+        return "La durée de remboursement doit être un nombre entier.";
+    }
+
+    if (parseInt(duree) <= 0) {
+        dureeRemboursementParent.classList.add('error-border');
+        return "La durée de remboursement doit être supérieure à zéro.";
+    }
+
+    return "";
+}
+
+function validateInputs(montant, taux, duree, montantEmprunterParent, tauxNominalParent, dureeRemboursementParent, error_printer) {
+    var error = "";
+    var firstError = true;
+
+    var montantError = validateMontant(montant, montantEmprunterParent);
+    if (montantError) {
+        error += (firstError ? "Veuillez remplir les champs: " : ", ") + montantError;
+        firstError = false;
+    }
+
+    var tauxError = validateTaux(taux, tauxNominalParent);
+    if (tauxError) {
+        error += (firstError ? "Veuillez remplir les champs: " : ", ") + tauxError;
+        firstError = false;
+    }
+
+    var dureeError = validateDuree(duree, dureeRemboursementParent);
+    if (dureeError) {
+        error += (firstError ? "Veuillez remplir les champs: " : ", ") + dureeError;
+        firstError = false;
+    }
+
+    if (error !== "") {
+        error_printer.innerHTML = error;
+        error_printer.style.display = 'block';
+        return false;
+    }
+
+    error_printer.style.display = 'none';
+    document.getElementById('tab_printer').style.display = 'block';
+    return true;
+}
+
 
 function ajout_ligne(mois, solde_initial, echeance, interet, amortissement, solde_restant) {
     // Convertir les valeurs en nombres

@@ -8,6 +8,11 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 	<header>
@@ -15,7 +20,7 @@
 	</header>
 	<main>
 		<!-- calculatrice -->
-		<div class="container">
+		<div id="nopdf" class="container">
 			<form>
 				<div class="item">
 					<h1 class="text-center">Calculatrice prêt immobilier</h1>
@@ -57,9 +62,9 @@
 		</div>
 
 		<!-- tableau -->
-		<div class="container" id="tab_printer">
+		<div class="container" id="tab_printer" style="display: none;">
 			<table>
-				<div class="item">
+				<div id="nopdf" class="item">
 					<h1>Tableau d'amortissement</h1>
 				</div>
 				<div class="item">
@@ -81,8 +86,8 @@
 					</tfoot>
 				</div>
 			</table>
-			<div class="item">
-				<button type="button"><b>Télécharger en PDF</b></button>					
+			<div id="nopdf" class="item">
+				<button type="button" onclick="generatePDF()"><b>Télécharger en PDF</b></button>					
 			</div>
 		</div>
 	</main>
@@ -90,6 +95,7 @@
 		<!-- copyright -->
 	</footer>
 <script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="generatePDF.js"></script>
 </body>
 </html>
 
