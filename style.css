@@ -34,18 +34,21 @@ header, footer {
 
 main {
   align-self: center;
+  border: none;
   width: 65%;
-  border: 2px solid var(--blue);
-  border-radius: 15px;
   text-align: center;
-  background-color: var(--white);
 }
 
 .container {
+  border: 2px solid var(--blue);
+  border-radius: 15px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  margin: 40px;
+  padding: 50px;
+  min-height: 100he;
 }
 
 /*---------FORMULAIRE------------*/
@@ -53,7 +56,6 @@ main {
 form {
   height: 100%;
   width: 50%;
-  margin: 50px;
   display: flex;
   flex-direction: column;
 }
@@ -95,12 +97,12 @@ input {
 
 button {
   align-self: center;
-  padding: 10px;
+  padding: 0% 4%;
+  height: 40px;
   border: none;
   border-radius: 10px;
   background-color: var(--blue);
   color: var(--white);
-  width: 30%;
   cursor: pointer;
 }
 
@@ -114,7 +116,41 @@ span {
   text-align: center;
   width: 20%;
 }
+/*-----------TABLE------------------*/
 
+table {
+    margin: 50px;
+    flex: 1;
+    width: 80%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+
+
+thead {
+    padding-bottom: 3%;
+}
+
+tbody {
+    min-height: 100px;
+}
+
+tbody::after {
+    content: "";
+    display: table-row;
+    height: 100px;
+}
+tbody::before {
+    content: "";
+    display: table-row;
+    height: 20px;
+}
+
+
+
+
+/*-----------TEXT-------------------*/
 .text-left {
   text-align: left;
 }
@@ -124,7 +160,8 @@ span {
 }
 
 .item {
-  padding: 40px;
+  padding: 4px;
+  width: 100%;
 }
 
 .danger {

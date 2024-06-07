@@ -41,6 +41,7 @@ function calculate(event) {
 function html(K, T, n) {
     var html = "";
     var nombre_mois = duree_remboursement * 12;
+
     var M = (K * taux_periodique) / (1 - Math.pow((1 + taux_periodique), -n));
 
     // Calcul du coût total du crédit

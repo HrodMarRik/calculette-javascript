@@ -13,48 +13,77 @@
 	<header>
 		<img src="microlead.png" alt="logo">
 	</header>
-	<main class="container">
+	<main>
 		<!-- calculatrice -->
-		<form>
-			<div class="item">
-				<h1 class="text-center">Calculatrice prêt immobilier</h1>
-			</div>
-			<div class="item">
-				<div class="form-line">
-					<div class="form-label">
-						<label><b>Montant emprunté</b></label>
-					</div>
-					<div class="form-control">
-						<input placeholder="en euro" type="number" name="montant_emprunter">
-						<span class=""><b>€</b></span>
-					</div>
+		<div class="container">
+			<form>
+				<div class="item">
+					<h1 class="text-center">Calculatrice prêt immobilier</h1>
 				</div>
-				<div class="form-line">
-					<div class="form-label">
-						<label><b>Taux nominal</b></label>
+				<div class="item">
+					<div class="form-line">
+						<div class="form-label">
+							<label><b>Montant emprunté</b></label>
+						</div>
+						<div class="form-control">
+							<input placeholder=" en euro" type="number" name="montant_emprunter">
+							<span><b>€</b></span>
+						</div>
 					</div>
-					<div class="form-control">
-						<input placeholder="en pourcent" type="number" name="taux_nominal">
-						<span class=""><b>%</b></span>
+					<div class="form-line">
+						<div class="form-label">
+							<label><b>Taux nominal</b></label>
+						</div>
+						<div class="form-control">
+							<input placeholder=" en pourcent" type="number" name="taux_nominal">
+							<span><b>%</b></span>
+						</div>
 					</div>
+					<div class="form-line">
+						<div class="form-label">
+							<label><b>Durée de remboursement</b></label>
+						</div>
+						<div class="form-control">
+							<input placeholder=" par ans" type="number" name="duree_remboursement">
+							<span><b>an(s)</b></span>
+						</div>
+					</div>
+					<p style="display: none;" id="error_printer" class="danger text-left"></p>
 				</div>
-				<div class="form-line">
-					<div class="form-label">
-						<label><b>Durée de remboursement</b></label>
-					</div>
-					<div class="form-control">
-						<input placeholder="par ans" type="number" name="duree_remboursement">
-						<span class=""><b>an(s)</b></span>
-					</div>
+				<div class="item">
+					<button type="button" onclick="calculate(event)"><b>Calculer</b></button>
 				</div>
-				<p style="display: none;" id="error_printer" class="danger text-left"></p>
-			</div>
+			</form>
+		</div>
+
+		<!-- tableau -->
+		<div class="container" >
+			<table>
+				<div class="item">
+					<h1>Tableau d'amortissement</h1>
+				</div>
+				<div class="item">
+					<thead>
+						<tr>
+							<th>Mois</th>
+							<th>Solde Initial</th>
+							<th>Échéance</th>
+							<th>Intérêts</th>
+							<th>Amortissement</th>
+							<th>Solde restant</th>
+						</tr>
+					</thead>
+					<tbody id="table_printer">
+					<!-- contenue push par le JS -->
+					</tbody>
+					<tfoot id="total_printer">
+					<!-- contenue push par le JS -->
+					</tfoot>
+				</div>
+			</table>
 			<div class="item">
-				<button type="button" onclick="calculate(event)"><b>Calculer</b></button>
+				<button type="button"><b>Télécharger en PDF</b></button>					
 			</div>
-		</form>
-		<div class="printer">
-			
 		</div>
 	</main>
 	<footer>
