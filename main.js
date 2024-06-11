@@ -40,109 +40,113 @@ function calculate(event) {
     }
 }
 
-
 function clearErrors(montantEmprunterParent, tauxNominalParent, dureeRemboursementParent, error_printer) {
     montantEmprunterParent.classList.remove('error-border');
     tauxNominalParent.classList.remove('error-border');
     dureeRemboursementParent.classList.remove('error-border');
     error_printer.innerHTML = "";
     error_printer.style.display = 'none';
+    document.getElementById('tab_printer').style.display = 'none';
 }
 
 function validateMontant(montant, montantEmprunterParent) {
     if (montant === "") {
         montantEmprunterParent.classList.add('error-border');
-        return "Le montant emprunté ne doit pas être vide.";
+        return "1";
     }
 
     var regex_entier = /^\d+$/;
     if (!regex_entier.test(montant)) {
         montantEmprunterParent.classList.add('error-border');
-        return "Le montant emprunté doit être un nombre entier.";
+        return "2";
     }
 
     if (parseFloat(montant) <= 0) {
         montantEmprunterParent.classList.add('error-border');
-        return "Le montant emprunté doit être supérieur à zéro.";
+        return "3";
     }
 
-    return "";
+    return ""; // Retourne une chaîne vide si aucune erreur
 }
-
 
 function validateTaux(taux, tauxNominalParent) {
     if (taux === "") {
         tauxNominalParent.classList.add('error-border');
-        return "Le taux nominal ne doit pas être vide.";
+        return "1";
     }
 
     var regex_decimal = /^\d+(\.\d+)$/;
     if (!regex_decimal.test(taux)) {
         tauxNominalParent.classList.add('error-border');
-        return "Le taux nominal doit être un nombre décimal.";
+        return "2";
     }
 
     if (parseFloat(taux) <= 0) {
         tauxNominalParent.classList.add('error-border');
-        return "Le taux nominal doit être supérieur à zéro.";
+        return "3";
     }
 
-    return "";
+    return ""; // Retourne une chaîne vide si aucune erreur
 }
-
 
 function validateDuree(duree, dureeRemboursementParent) {
     if (duree === "") {
         dureeRemboursementParent.classList.add('error-border');
-        return "La durée de remboursement ne doit pas être vide.";
+        return "1";
     }
 
     var regex_entier = /^\d+$/;
     if (!regex_entier.test(duree)) {
         dureeRemboursementParent.classList.add('error-border');
-        return "La durée de remboursement doit être un nombre entier.";
+        return "2";
     }
 
     if (parseInt(duree) <= 0) {
         dureeRemboursementParent.classList.add('error-border');
-        return "La durée de remboursement doit être supérieure à zéro.";
+        return "3";
     }
 
-    return "";
+    return ""; // Retourne une chaîne vide si aucune erreur
 }
 
 function validateInputs(montant, taux, duree, montantEmprunterParent, tauxNominalParent, dureeRemboursementParent, error_printer) {
     var error = "";
-    var firstError = true;
 
     var montantError = validateMontant(montant, montantEmprunterParent);
-    if (montantError) {
-        error += (firstError ? "Veuillez remplir les champs: " : ", ") + montantError;
-        firstError = false;
+    if (montantError === "1") {
+        error += "Veuillez remplir le champ montant. ";
+    } else if (montantError !== "") {
+        error += montantError + ", ";
     }
 
     var tauxError = validateTaux(taux, tauxNominalParent);
-    if (tauxError) {
-        error += (firstError ? "Veuillez remplir les champs: " : ", ") + tauxError;
-        firstError = false;
+    if (tauxError === "1") {
+        error += "Veuillez remplir le champ taux. ";
+    } else if (tauxError !== "") {
+        error += tauxError + ", ";
     }
 
     var dureeError = validateDuree(duree, dureeRemboursementParent);
-    if (dureeError) {
-        error += (firstError ? "Veuillez remplir les champs: " : ", ") + dureeError;
-        firstError = false;
+    if (dureeError === "1") {
+        error += "Veuillez remplir le champ durée. ";
+    } else if (dureeError !== "") {
+        error += dureeError + ", ";
     }
 
+    // Supprimer la dernière virgule et l'espace s'il y en a
     if (error !== "") {
-        error_printer.innerHTML = error;
-        error_printer.style.display = 'block';
-        return false;
+        error = error.slice(0, -2);
     }
 
-    error_printer.style.display = 'none';
-    document.getElementById('tab_printer').style.display = 'block';
-    return true;
+    // Afficher l'erreur dans error_printer
+    if (error !== "") {
+        error_printer.textContent = error;
+        error_printer.style.display = "block";
+    }
+
+    return error === ""; // Retourne true si aucune erreur, false sinon
 }
+
 
 
 function ajout_ligne(mois, solde_initial, echeance, interet, amortissement, solde_restant) {
