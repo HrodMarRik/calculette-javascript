@@ -109,6 +109,7 @@ input[type="number"] {
 
 button {
   align-self: center;
+  justify-content: center;
   padding: 0% 4%;
   height: 40px;
   border: none;
@@ -274,7 +275,6 @@ tbody::before {
   }
 
   button {
-    padding: 4% 8%;
     height: 30px;
   }
 }
