@@ -5,9 +5,9 @@ function calculate(event) {
     var tauxNominalElement = document.getElementsByName('taux_nominal')[0];
     var dureeRemboursementElement = document.getElementsByName('duree_remboursement')[0];
 
-    var montant_emprunter = montantEmprunterElement.value;
-    var taux_nominal = tauxNominalElement.value;
-    var duree_remboursement = dureeRemboursementElement.value;
+    var montant_emprunter = montantEmprunterElement.value.replace(/\s/g, '');
+    var taux_nominal = tauxNominalElement.value.replace(/\s/g, '');
+    var duree_remboursement = dureeRemboursementElement.value.replace(/\s/g, '');
 
     var montantEmprunterParent = montantEmprunterElement.closest('.form-control');
     var tauxNominalParent = tauxNominalElement.closest('.form-control');
@@ -38,12 +38,23 @@ function calculate(event) {
         ajout_ligne(mois, montant_emprunter, echeance_mensuelle, interets_du_mois, amortissement_du_mois, solde_restant);
         montant_emprunter = solde_restant;
     }
+    document.getElementById('tab_printer').style.display = 'block';
+    const numberElements = document.querySelectorAll(".number");
+    numberElements.forEach(element => {
+    const number = parseFloat(element.textContent.replace(/\s/g, '').replace(/,/g, '.'));
+    if (!isNaN(number)) {
+      const formattedNumber = new Intl.NumberFormat('fr-FR').format(number);
+      element.textContent = formattedNumber;
+    }
+    });
 }
 
 function clearErrors(montantEmprunterParent, tauxNominalParent, dureeRemboursementParent, error_printer) {
+
     montantEmprunterParent.classList.remove('error-border');
     tauxNominalParent.classList.remove('error-border');
     dureeRemboursementParent.classList.remove('error-border');
+    
     error_printer.innerHTML = "";
     error_printer.style.display = 'none';
     document.getElementById('tab_printer').style.display = 'none';
@@ -158,22 +169,20 @@ function ajout_ligne(mois, solde_initial, echeance, interet, amortissement, sold
     amortissement = parseFloat(amortissement);
     solde_restant = parseFloat(solde_restant);
 
-    // Création d'une nouvelle ligne
     var newRow = document.createElement('tr');
 
-    // Ajout des cellules avec les valeurs fournies
     newRow.innerHTML = `
-        <td>${mois}</td>
-        <td>${solde_initial.toFixed(2)}€</td>
-        <td>${echeance.toFixed(2)}€</td>
-        <td>${interet.toFixed(2)}€</td>
-        <td>${amortissement.toFixed(2)}€</td>
-        <td>${solde_restant.toFixed(2)}€</td>
+        <td class="number">${mois}</td>
+        <td class="number">${solde_initial.toFixed(2)}€</td>
+        <td class="number">${echeance.toFixed(2)}€</td>
+        <td class="number">${interet.toFixed(2)}€</td>
+        <td class="number">${amortissement.toFixed(2)}€</td>
+        <td class="number">${solde_restant.toFixed(2)}€</td>
     `;
 
-    // Sélection du tbody
     var tableBody = document.getElementById('table_printer');
 
-    // Ajout de la nouvelle ligne à la fin du tbody
     tableBody.appendChild(newRow);
 }
+
+

@@ -31,7 +31,7 @@
 							<label><b>Montant emprunté</b></label>
 						</div>
 						<div class="form-control">
-							<input placeholder=" en euro" type="number" name="montant_emprunter">
+							<input class="number" placeholder=" en euro" type="text" name="montant_emprunter">
 							<span><b>€</b></span>
 						</div>
 					</div>
@@ -62,7 +62,7 @@
 		</div>
 
 		<!-- tableau -->
-		<div class="container" id="tab_printer" style="display: none;">
+		<div class="container table-container" id="tab_printer" style="display: none;">
 			<table>
 				<div class="item">
 					<h1>Tableau d'amortissement</h1>
@@ -81,9 +81,6 @@
 					<tbody id="table_printer">
 					<!-- contenue push par le JS -->
 					</tbody>
-					<tfoot id="total_printer">
-					<!-- contenue push par le JS -->
-					</tfoot>
 				</div>
 			</table>
 			<div class="item">
@@ -96,6 +93,7 @@
 	</footer>
 <script type="text/javascript" src="main.js"></script>
 <script type="text/javascript" src="generatePDF.js"></script>
+<script type="text/javascript" src="afficheur_nombre.js"></script>
 </body>
 </html>
 

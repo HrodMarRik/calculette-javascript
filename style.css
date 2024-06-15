@@ -7,6 +7,8 @@
   --active-blue: #29517F;
   --orange: #FF822E;
   --rouge: #FF0000;
+  --base-font-size: 16px;
+  --reduced-font-size: 10px;
 }
 
 /*------------CORPS--------------*/
@@ -49,14 +51,14 @@ main {
   align-items: center;
   margin: 40px;
   padding: 50px;
-  min-height: 100he;
+  min-height: 100vh;
 }
 
 /*---------FORMULAIRE------------*/
 
 form {
   height: 100%;
-  width: 60%;
+  width: 70%;
   display: flex;
   flex-direction: column;
 }
@@ -87,13 +89,22 @@ form {
 }
 
 .form-control:focus-within {
-	border: 1px solid var(--orange);
+  border: 1px solid var(--orange);
 }
 
 input {
   width: 80%;
   border: none;
   outline: none;
+}
+
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 button {
@@ -122,38 +133,39 @@ span {
 }
 
 /*-----------TABLE------------------*/
-
+.table-container {
+  overflow-x: auto;
+}
 table {
-    flex: 1;
-    width: 100%;
-    border-collapse: collapse;
+  flex: 1;
+  width: 100%;
+  border-collapse: separate; /* Utiliser 'separate' pour permettre le 'border-spacing' */
+  border-spacing: 5px; /* Ajouter une marge de 2px entre chaque colonne */
 }
 
-
 thead {
-    padding-bottom: 3%;
+  padding-bottom: 3%;
 }
 
 tbody {
-    min-height: 100px;
-    text-align: center;
+  min-height: 100px;
+  text-align: center;
 }
 
 tbody::after {
-    content: "";
-    display: table-row;
-    height: 100px;
+  content: "";
+  display: table-row;
+  height: 100px;
 }
+
 tbody::before {
-    content: "";
-    display: table-row;
-    height: 20px;
+  content: "";
+  display: table-row;
+  height: 20px;
 }
-
-
-
 
 /*-----------TEXT-------------------*/
+
 .text-left {
   text-align: left;
 }
@@ -172,15 +184,97 @@ tbody::before {
 }
 
 .error-border {
-    border: 1px solid red;
+  border: 1px solid var(--rouge);
 }
 
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+
+/*------Gestion du responsif--------*/
+
+@media (max-width: 1200px) {
+  main {
+    width: 75%;
+  }
+
+  .container {
+    margin: 30px;
+    padding: 40px;
+  }
+
+  form {
+    width: 70%;
+  }
 }
 
-input[type="number"] {
-  -moz-appearance: textfield;
+@media (max-width: 992px) {
+  main {
+    width: 85%;
+  }
+
+  .container {
+    margin: 20px;
+    padding: 30px;
+  }
+
+  form {
+    width: 80%;
+  }
+
+  .form-line {
+    flex-direction: column;
+  }
+
+  .form-label, .form-control {
+    width: 90%;
+    text-align: left;
+  }
+}
+
+@media (max-width: 768px) {
+  header, footer {
+    margin: 10px;
+    padding: 15px;
+  }
+
+  .container {
+    margin: 10px;
+    padding: 20px;
+  }
+
+  form {
+    width: 90%;
+  }
+
+  button {
+    padding: 2% 6%;
+    height: 35px;
+  }
+}
+
+@media (max-width: 576px) {
+  :root {
+    --base-font-size: var(--reduced-font-size);
+  }
+
+  header, footer {
+    margin: 5px;
+    padding: 10px;
+  }
+
+  main {
+    width: 95%;
+  }
+
+  .container {
+    margin: 5px;
+    padding: 10px;
+  }
+
+  form {
+    width: 100%;
+  }
+
+  button {
+    padding: 4% 8%;
+    height: 30px;
+  }
 }
