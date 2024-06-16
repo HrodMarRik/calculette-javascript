@@ -38,7 +38,7 @@ header, footer {
 main {
   align-self: center;
   border: none;
-  width: 65%;
+  width: 85%;
   text-align: center;
 }
 
@@ -51,7 +51,6 @@ main {
   align-items: center;
   margin: 40px;
   padding: 50px;
-  min-height: 100vh;
 }
 
 /*---------FORMULAIRE------------*/
@@ -142,6 +141,7 @@ table {
   width: 100%;
   border-collapse: separate; /* Utiliser 'separate' pour permettre le 'border-spacing' */
   border-spacing: 5px; /* Ajouter une marge de 2px entre chaque colonne */
+  text-align: left;
 }
 
 thead {
@@ -151,6 +151,7 @@ thead {
 tbody {
   min-height: 100px;
   text-align: center;
+  text-align: left;
 }
 
 tbody::after {
@@ -163,6 +164,16 @@ tbody::before {
   content: "";
   display: table-row;
   height: 20px;
+}
+tr {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: left;
+}
+td, th {
+  flex:1;
+  margin: 5px;
 }
 
 /*-----------TEXT-------------------*/
@@ -193,7 +204,7 @@ tbody::before {
 
 @media (max-width: 1200px) {
   main {
-    width: 75%;
+    width: 90%;
   }
 
   .container {
@@ -207,9 +218,6 @@ tbody::before {
 }
 
 @media (max-width: 992px) {
-  main {
-    width: 85%;
-  }
 
   .container {
     margin: 20px;

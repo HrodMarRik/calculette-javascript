@@ -39,13 +39,12 @@ function calculate(event) {
         montant_emprunter = solde_restant;
     }
     document.getElementById('tab_printer').style.display = 'block';
+
     const numberElements = document.querySelectorAll(".number");
     numberElements.forEach(element => {
-    const number = parseFloat(element.textContent.replace(/\s/g, '').replace(/,/g, '.'));
-    if (!isNaN(number)) {
-      const formattedNumber = new Intl.NumberFormat('fr-FR').format(number);
-      element.textContent = formattedNumber;
-    }
+        const number = parseFloat(element.textContent.replace(/\s/g, '').replace(/,/g, '.'));
+        const formattedNumber = new Intl.NumberFormat('fr-FR').format(number) + "€";
+        element.textContent = formattedNumber;
     });
 }
 
@@ -157,6 +156,7 @@ function validateInputs(montant, taux, duree, montantEmprunterParent, tauxNomina
         if (champs_vide !== "") { champs_vide = "Veuillez remplir les champs: " + champs_vide}
             error_printer.innerHTML = champs_vide + ".<br>" + error;
         error_printer.style.display = "block";
+        return false;
     }
 
     return error === "";
@@ -176,7 +176,9 @@ function ajout_ligne(mois, solde_initial, echeance, interet, amortissement, sold
     var newRow = document.createElement('tr');
 
     newRow.innerHTML = `
-        <td class="number">${mois}</td>
+        <td>${mois}
+
+        </td>
         <td class="number">${solde_initial.toFixed(2)}€</td>
         <td class="number">${echeance.toFixed(2)}€</td>
         <td class="number">${interet.toFixed(2)}€</td>
