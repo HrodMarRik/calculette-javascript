@@ -121,41 +121,45 @@ function validateDuree(duree, dureeRemboursementParent) {
 }
 
 function validateInputs(montant, taux, duree, montantEmprunterParent, tauxNominalParent, dureeRemboursementParent, error_printer) {
+    var champs_vide = "";
     var error = "";
 
     var montantError = validateMontant(montant, montantEmprunterParent);
     if (montantError === "1") {
-        error += "Veuillez remplir le champ montant. ";
-    } else if (montantError !== "") {
-        error += montantError + ", ";
+        champs_vide += "<b>Montant</b>";
+    } else if (montantError === "2") {
+        error += "le <b>Montant</b> dois être un entier.<br>";
+    } else if (montantError === "3") {
+        error += "le <b>Montant</b> est <b>null</b>.<br>";
     }
 
     var tauxError = validateTaux(taux, tauxNominalParent);
     if (tauxError === "1") {
-        error += "Veuillez remplir le champ taux. ";
-    } else if (tauxError !== "") {
-        error += tauxError + ", ";
+        if (champs_vide !== "") { champs_vide += ', '}
+        champs_vide += "<b>Taux nominal</b>";
+    } else if (tauxError === "2") {
+        error += "le <b>Taux nominal</b> dois être un decimal.<br>";
+    } else if (tauxError === "3") {
+        error += "le <b>Taux nominal</b> est <b>null</b>.<br>";
     }
 
     var dureeError = validateDuree(duree, dureeRemboursementParent);
     if (dureeError === "1") {
-        error += "Veuillez remplir le champ durée. ";
-    } else if (dureeError !== "") {
-        error += dureeError + ", ";
+        if (champs_vide !== "") { champs_vide += ', '}
+        champs_vide += "<b>Durée</b>";
+    } else if (dureeError === "2") {
+        error += "la <b>Durée</b> dois être un entier.<br>";
+    } else if (dureeError === "3") {
+        error += "la <b>Durée</b> est <b>null</b>.<br>";
     }
 
-    // Supprimer la dernière virgule et l'espace s'il y en a
-    if (error !== "") {
-        error = error.slice(0, -2);
-    }
-
-    // Afficher l'erreur dans error_printer
-    if (error !== "") {
-        error_printer.textContent = error;
+    if (error !== "" || champs_vide !== "") {
+        if (champs_vide !== "") { champs_vide = "Veuillez remplir les champs: " + champs_vide}
+            error_printer.innerHTML = champs_vide + ".<br>" + error;
         error_printer.style.display = "block";
     }
 
-    return error === ""; // Retourne true si aucune erreur, false sinon
+    return error === "";
 }
 
 
